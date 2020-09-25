@@ -11,16 +11,17 @@ int main(){
 }
 
 int space_char(char c){
-  if(c == '\t' && c == ' '){
+  if(c == '\t' || c == ' '){
     return 1;
   }
-  else{
-    return 0;
-  }
+  return 0;
 }
 
 int non_space_char(char c){
-  return(!space_char(c) && c != '\0n');
+  if(c != '\t' || c != ' '){
+    return 1;
+  }
+  return 0;
 }
 
 char *word_start(char *str){
