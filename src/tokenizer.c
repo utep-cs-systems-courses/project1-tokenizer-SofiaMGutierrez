@@ -5,22 +5,21 @@
 
 int main(){
   printf("$ ");
-  //char str[100];
-  //fgets(str,100,stdin);
-  char str[] = "I am cool";
-  char **tokenized = tokenize(str);
+  char user_input[100];
+  fgets(user_input,100,stdin);
+  char **tokenized = tokenize(user_input);
   print_tokens(tokenized);
 }
 
 int space_char(char c){
-  if(c == '\t' || c == ' '){
+  if((c == '\t' || c == ' ') && c != 0){
     return 1;
   }
   return 0;
 }
 
 int non_space_char(char c){
-  if(c != '\t' || c != ' '){
+  if((c != '\t' && c != ' ')&& c != 0){
     return 1;
   }
   return 0;
@@ -33,6 +32,7 @@ char *word_start(char *str){
     }
     str++;
   }
+  return str;
 }
 
 char *word_terminator(char *word){
@@ -42,6 +42,7 @@ char *word_terminator(char *word){
     }
     word++;
   }
+  return word;
 }
 
 int count_words(char *str){
@@ -73,21 +74,36 @@ char *copy_str(char *inStr, short len){
   // copiedStr will be dereferenced to access memory
   char *copiedStr = malloc(sizeof(char) * (len + 1));
   // Copying input string
-  for(int i = 0; i < len; i++){
+  int i;
+  for(i = 0; i < len; i++){
     copiedStr[i] = inStr[i];
   }
   // Appends a zero-terminator at the end
-  copiedStr[len] = '\0';
+  copiedStr[i] = 0;
   return copiedStr;
 }
 
 // Accepts a string of characters as input and returns an array of tokens
 char **tokenize(char *str){
-  char **tokens = malloc(sizeof(char)*(count_words(str)+1));
+  char *pStr = str; // Points to string
+  char **tokens = malloc(sizeof(char) * ((count_words(str))+1));
+  int i;
+  for(i = 0; i < (count_words(str)); i++){
+    pStr = word_start(pStr);
+    tokens[i] = copy_str(pStr, word_length(pStr));
+    pStr = word_terminator(pStr);
+  }
+  tokens[i] = 0;
+  return tokens;
 }
 
 void print_tokens(char **tokens){
-  printf("testing");
+  int i = 0;
+  while(*tokens){
+    printf("tokens[%d] = %s\n", i, *tokens);
+    i++;
+    tokens++;
+  }
 }
 
 void free_tokens(char **tokens){
