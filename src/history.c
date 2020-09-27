@@ -2,12 +2,6 @@
 #include <stdlib.h>
 #include "history.h"
 
-int main(){
-  List *history = init_history();
-  add_history(history,"i like cake");
-  print_history(history);
-}
-
 List *init_history(){
   List *history_list = malloc(sizeof(List));
   history_list->root = malloc(sizeof(Item));

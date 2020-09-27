@@ -3,14 +3,6 @@
 #include <stdlib.h>
 #include "tokenizer.h"
 
-int main(){
-  printf("$ ");
-  char user_input[100];
-  fgets(user_input,100,stdin);
-  char **tokenized = tokenize(user_input);
-  print_tokens(tokenized);
-}
-
 int space_char(char c){
   if((c == '\t' || c == ' ') && c != 0){
     return 1;
